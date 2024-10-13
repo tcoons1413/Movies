@@ -48,7 +48,7 @@ export default function MovieAPI({isAdult}) {
             </Card>
             
             ))}
-        <Paginations numOfPages={movieData.total_pages}/>
+        {/* <Paginations numOfPages={movieData.total_pages}/> */}
         </div>
   )
 }
