@@ -17,7 +17,7 @@ export default function MovieAPI({isAdult}) {
                 headers: {
                     accept: 'application/json',Authorization:"Bearer "+import.meta.env.VITE_KEY}};
                     
-                    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?primary_release_year=2015&include_adult=${isAdult}&page=5`, options, options)
+                    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?primary_release_year=2024&include_adult=${isAdult}&page=1`, options, options)
                     const data = await response.json()
                     setData(data)
                     // console.log(isAdult)
