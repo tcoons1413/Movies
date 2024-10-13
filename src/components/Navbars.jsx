@@ -3,10 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+// import InputGroup from 'react-bootstrap/InputGroup';
+
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 
-function Navbars() {
+function Navbars({setIsAdult,isAdult}) {
+
+
+
   return (
+    <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Navbar.Brand href="#">My Movies</Navbar.Brand>
@@ -28,40 +34,27 @@ function Navbars() {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-          <Form className="my-3">
-          <div className='d-flex flex-row justify-content-around mx-2 px-2'>
-            <Form.Check // prettier-ignore
-              type="switch"
-              id="adultContent"
-              label="Adult Content"
-            />
-            <Form.Check // prettier-ignore
-              type="switch"
-              label="disabled switch"
-              id="disabled-custom-switch"
-            />
-            <Form.Check // prettier-ignore
-              type="switch"
-              label="disabled switch"
-              id="disabled-custom-switch"
-            />
-            <Form.Check // prettier-ignore
-              type="switch"
-              label="disabled switch"
-              id="disabled-custom-switch"
-            />
-            <Form.Check // prettier-ignore
-              type="switch"
-              label="disabled switch"
-              id="disabled-custom-switch"
-            />
-          </div>
+            <Button variant="outline-success" onClick={()=>{
+              
+            }}>Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+          <Form className="my-3">
+          <div className='d-flex flex-row gap-4 mx-2 px-2 my-4'>
+            <Form.Check // prettier-ignore
+              type="switch"
+              id="adultContent"
+              label="Adult Content"
+              value={isAdult}
+              onChange={()=>setIsAdult(!isAdult)}
+            />
+              <input placeholder='Max Pages' style={{width:"100px"}} type="number"/>
+          </div>
+          
+          </Form>
+    </>
   );
 }
 
