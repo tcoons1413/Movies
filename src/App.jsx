@@ -3,7 +3,7 @@
 // import viteLogo from '/vite.svg'
 import { useState } from "react";
 import "./App.css";
-import MovieAPI from "./components/movieAPI";
+import MovieAPI from "./components/MoviesAPI";
 import Navbars from "./components/Navbars";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@mantine/core/styles.css";
