@@ -13,6 +13,7 @@ export default function MovieAPI({ year, newGenre }) {
     flexWrap: "wrap",
     gap: "20px",
     justifyContent: "center",
+    marginTop: "20px",
   };
   const [selectedTitle, setSelectedTitle] = useState("");
 
