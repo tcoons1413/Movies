@@ -41,30 +41,35 @@ export default function MovieAPI({ year, newGenre }) {
     getData();
   }, [year, newGenre]);
 
-  return (
-    <div style={cardStyles}>
-      {console.log(movieData)}
-      {movieData.results.map((url) => (
-        <Card key={crypto.randomUUID()} style={{ width: "18rem" }}>
-          <div>
-            <Card.Img
-              className="hover-card"
-              variant="top"
-              src={"https://image.tmdb.org/t/p/w500" + url.poster_path}
-            />
-          </div>
-          <Card.Body>
-            <div className="d-flex flex-column">
-              <div className="cardTitle">
-                <Card.Title>{url.original_title}</Card.Title>
-              </div>
-              <div className="cardText">{url.overview}</div>
-              <Button variant="primary">Go somewhere</Button>
+  // eslint-disable-next-line no-prototype-builtins
+  if (movieData.hasOwnProperty("success")) {
+    return <h1 className="text-center">Error: Page is under construction.</h1>;
+  } else {
+    return (
+      <div style={cardStyles}>
+        {console.log(movieData)}
+        {movieData.results?.map((url) => (
+          <Card key={crypto.randomUUID()} style={{ width: "18rem" }}>
+            <div>
+              <Card.Img
+                className="hover-card"
+                variant="top"
+                src={"https://image.tmdb.org/t/p/w500" + url.poster_path}
+              />
             </div>
-          </Card.Body>
-        </Card>
-      ))}
-      {/* <Paginations numOfPages={movieData.total_pages}/> */}
-    </div>
-  );
+            <Card.Body>
+              <div className="d-flex flex-column">
+                <div className="cardTitle">
+                  <Card.Title>{url.original_title}</Card.Title>
+                </div>
+                <div className="cardText">{url.overview}</div>
+                <Button variant="primary">Go somewhere</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        ))}
+        {/* <Paginations numOfPages={movieData.total_pages}/> */}
+      </div>
+    );
+  }
 }

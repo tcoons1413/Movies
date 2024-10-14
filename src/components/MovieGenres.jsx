@@ -24,7 +24,7 @@ export default function MovieGenres({ newGenre, setNewGenre }) {
     }
     getData();
   }, []);
-  let selectedGenre = movieGenre.genres.filter((selectGenre) => {
+  let selectedGenre = movieGenre.genres?.find((selectGenre) => {
     return selectGenre.id === newGenre;
   });
   console.log(selectedGenre);
@@ -34,10 +34,10 @@ export default function MovieGenres({ newGenre, setNewGenre }) {
       <DropdownButton
         variant="outline-primary"
         align="start"
-        title={selectedGenre[0]?.name || "Select"}
+        title={selectedGenre?.name || "Select"}
         id="dropdown-menu-align-end"
       >
-        {movieGenre.genres.map((genre) => {
+        {movieGenre.genres?.map((genre) => {
           return (
             <Dropdown.Item
               key={genre.id}
