@@ -5,7 +5,7 @@ import { useState } from "react";
 import "./App.css";
 import MovieAPI from "./components/MoviesAPI";
 import Navbars from "./components/Navbars";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/bootstrap.min.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
