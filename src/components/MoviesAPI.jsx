@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import MovieYoutube from "./MovieYoutube";
 // import Paginations from "./Paginations";
 
 export default function MovieAPI({ year, newGenre }) {
@@ -13,10 +14,20 @@ export default function MovieAPI({ year, newGenre }) {
     gap: "20px",
     justifyContent: "center",
   };
-  console.log(year);
+  const [selectedTitle, setSelectedTitle] = useState("");
 
+  let [newYoutubeURL, setNewYouTubeURL] = useState("LYaJVfiwv0w");
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function setCurrentYouTubeURL(youtubeURL) {
+    setNewYouTubeURL(youtubeURL);
+  }
+
+  //Movie Data
   useEffect(() => {
-    console.log(newGenre);
     async function getData() {
       const options = {
         method: "GET",
@@ -35,11 +46,13 @@ export default function MovieAPI({ year, newGenre }) {
       );
       const data = await response.json();
       setData(data);
-      // console.log(isAdult)
-      console.log(data);
     }
     getData();
   }, [year, newGenre]);
+
+  // movieData.results.map((movie) => {
+  //   console.log(movie.id);
+  // });
 
   // eslint-disable-next-line no-prototype-builtins
   if (movieData.hasOwnProperty("success")) {
@@ -47,7 +60,6 @@ export default function MovieAPI({ year, newGenre }) {
   } else {
     return (
       <div style={cardStyles}>
-        {console.log(movieData)}
         {movieData.results?.map((url) => (
           <Card key={crypto.randomUUID()} style={{ width: "18rem" }}>
             <div>
@@ -55,6 +67,11 @@ export default function MovieAPI({ year, newGenre }) {
                 className="hover-card"
                 variant="top"
                 src={"https://image.tmdb.org/t/p/w500" + url.poster_path}
+                onClick={() => {
+                  setShow(true);
+                  setNewYouTubeURL(url.id);
+                  setSelectedTitle(url.title);
+                }}
               />
             </div>
             <Card.Body>
@@ -67,7 +84,14 @@ export default function MovieAPI({ year, newGenre }) {
             </Card.Body>
           </Card>
         ))}
-        {/* <Paginations numOfPages={movieData.total_pages}/> */}
+        <MovieYoutube
+          newYoutubeURL={newYoutubeURL}
+          setNewYouTubeURL={setCurrentYouTubeURL}
+          show={show}
+          handleClose={handleClose}
+          handleShow={handleShow}
+          selectedTitle={selectedTitle}
+        />
       </div>
     );
   }

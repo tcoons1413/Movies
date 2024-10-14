@@ -31,7 +31,10 @@ function App() {
           setNewGenre={setCurrentGenre}
           newGenre={newGenre}
         />
-        <MovieAPI year={year} newGenre={newGenre} />
+        <MovieAPI
+          year={year}
+          newGenre={newGenre}
+        />
       </MantineProvider>
     </>
   );
