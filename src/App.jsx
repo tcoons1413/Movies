@@ -8,6 +8,7 @@ import Navbars from "./components/Navbars";
 import "./assets/bootstrap.min.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
+import Footer from "./components/Footer";
 
 function App() {
   let [year, setYear] = useState();
@@ -31,11 +32,9 @@ function App() {
           setNewGenre={setCurrentGenre}
           newGenre={newGenre}
         />
-        <MovieAPI
-          year={year}
-          newGenre={newGenre}
-        />
+        <MovieAPI year={year} newGenre={newGenre} />
       </MantineProvider>
+      <Footer />
     </>
   );
 }
