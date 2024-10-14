@@ -1,34 +1,40 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import { useState } from 'react';
-import './App.css'
-import MovieAPI from './components/MovieAPI';
-import Navbars from './components/Navbars'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
+import { useState } from "react";
+import "./App.css";
+import MovieAPI from "./components/movieAPI";
+import Navbars from "./components/Navbars";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
 function App() {
+  let [year, setYear] = useState();
 
-  let [isAdult,setIsAdult] = useState(false) 
-
-
-  function setIsAdultTrueFalse(adult){
-    setIsAdult(adult)
+  function setCurrentYear(year) {
+    setYear(year);
   }
 
+  let [newGenre, setNewGenre] = useState();
 
+  function setCurrentGenre(newGenre) {
+    setNewGenre(newGenre);
+  }
 
   return (
     <>
       <MantineProvider>
-        <Navbars setIsAdult={setIsAdultTrueFalse} isAdult={isAdult}/>
-        <MovieAPI isAdult={isAdult}/>
-        
+        <Navbars
+          setYear={setCurrentYear}
+          year={year}
+          setNewGenre={setCurrentGenre}
+          newGenre={newGenre}
+        />
+        <MovieAPI year={year} newGenre={newGenre} />
       </MantineProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

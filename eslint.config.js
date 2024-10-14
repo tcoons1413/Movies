@@ -33,7 +33,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      "react/prop-types": [0, { ignore: [setIsAdult,isAdult,numOfPages]}]
+      // "react/prop-types": [0, { ignore: []}]
     },
   },
 ]
