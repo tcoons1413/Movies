@@ -63,7 +63,6 @@ export default function MovieAPI({ year, newGenre }) {
                   <Card.Title>{url.original_title}</Card.Title>
                 </div>
                 <div className="cardText">{url.overview}</div>
-                <Button variant="primary">Go somewhere</Button>
               </div>
             </Card.Body>
           </Card>
