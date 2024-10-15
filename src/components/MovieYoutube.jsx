@@ -11,7 +11,9 @@ export default function MovieYoutube({
   handleShow,
   handleClose,
   selectedTitle,
+  searchValue,
 }) {
+  console.log(searchValue)
   const [youtubeURL, setYouTubeURL] = useState({ results: [] });
   useEffect(() => {
     async function getData() {
@@ -31,7 +33,6 @@ export default function MovieYoutube({
         .then((response) =>
           setYouTubeURL(
             response.results.filter((movie) => {
-              // console.log(movie)
               return movie.site === "YouTube";
             })[0].key
           )

@@ -3,12 +3,17 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import DropdownButton from "react-bootstrap/DropdownButton";
 import MovieGenres from "./MovieGenres";
-// import { useState } from "react";
 
-function Navbars({ year, setYear, newGenre, setNewGenre }) {
+
+function Navbars({
+  year,
+  setYear,
+  newGenre,
+  setNewGenre,
+  searchValue,
+  setSearchValue,
+}) {
   return (
     <>
       <div className="sticky-top">
@@ -25,14 +30,18 @@ function Navbars({ year, setYear, newGenre, setNewGenre }) {
               >
                 <Nav.Link href="#action1">Home</Nav.Link>
               </Nav>
-              <Form className="d-flex">
+              <Form className="d-flex mx-2">
                 <Form.Control
+                  style={{ width: "145px" }}
                   type="search"
                   placeholder="Search Movie"
                   className="me-2"
                   aria-label="Search"
                 />
-                <Button variant="outline-success" onClick={() => {}}>
+                <Button
+                  style={{ width: "100px" }}
+                  variant="outline-success"
+                >
                   Search
                 </Button>
               </Form>

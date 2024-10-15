@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import MovieYoutube from "./MovieYoutube";
-// import Paginations from "./Paginations";
 
 export default function MovieAPI({ year, newGenre }) {
   const [movieData, setData] = useState({ results: [] });
@@ -50,10 +48,6 @@ export default function MovieAPI({ year, newGenre }) {
     }
     getData();
   }, [year, newGenre]);
-
-  // movieData.results.map((movie) => {
-  //   console.log(movie.id);
-  // });
 
   // eslint-disable-next-line no-prototype-builtins
   if (movieData.hasOwnProperty("success")) {

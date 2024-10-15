@@ -1,8 +1,8 @@
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 
 export default function Footer() {
   return (
-    <Card style={{ width: "100%" , height:"50px"}} className='my-5'>
+    <Card style={{ width: "100%", height: "50px" }} className="my-5">
       <div className="d-flex justify-content-center align-items-center">
         <p>
           This product uses the TMDB API but is not endorsed or certified by

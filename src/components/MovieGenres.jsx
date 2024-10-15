@@ -23,17 +23,18 @@ export default function MovieGenres({ newGenre, setNewGenre }) {
         .catch((err) => console.error(err));
     }
     getData();
-  }, []);
+  }, [])
   let selectedGenre = movieGenre.genres?.find((selectGenre) => {
     return selectGenre.id === newGenre;
   });
   return (
-    <div className="d-flex flex-column gap-3">
+    <div className="d-flex flex-column gap-3 ">
       <DropdownButton
+        style={{ width: "150px" }}
         variant="outline-primary"
         align="start"
         title={selectedGenre?.name || "Select Genre"}
-        id="dropdown-menu-align-end"
+        id="dropdown-menu-align-start"
       >
         {movieGenre.genres?.map((genre) => {
           return (
