@@ -45,7 +45,9 @@ export default function MovieYoutube({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{selectedTitle}</Modal.Title>
+        <Modal.Title style={{ color: "white", fontWeight: "bold" }}>
+          {selectedTitle}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {youtubeURL ? (

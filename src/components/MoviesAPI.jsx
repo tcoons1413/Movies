@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import MovieYoutube from "./MovieYoutube";
 
-export default function MovieAPI({ year, newGenre = "28" }) {
+export default function MovieAPI({ year, newGenre = "28", searchValue }) {
   const [movieData, setMovieData] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [newYoutubeURL, setNewYouTubeURL] = useState("LYaJVfiwv0w");
@@ -14,19 +14,21 @@ export default function MovieAPI({ year, newGenre = "28" }) {
 
   const handleClose = () => setShow(false);
 
+  // Modify the fetchMovies function to accept searchValue
   async function fetchMovies(pageNum) {
     try {
       setLoading(true);
-      const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?primary_release_year=${year}&include_adult=true&page=${pageNum}&with_genres=${newGenre}`,
-        {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
-          },
-        }
-      );
+      const url = searchValue
+        ? `https://api.themoviedb.org/3/search/movie?query=${searchValue}&page=${pageNum}`
+        : `https://api.themoviedb.org/3/discover/movie?primary_release_year=${year}&include_adult=true&page=${pageNum}&with_genres=${newGenre}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
+        },
+      });
       const data = await response.json();
       setMovieData((prevMovies) => [...prevMovies, ...data.results]);
       setLoading(false);
@@ -40,7 +42,7 @@ export default function MovieAPI({ year, newGenre = "28" }) {
     setMovieData([]);
     setPage(1);
     fetchMovies(1);
-  }, [year, newGenre]);
+  }, [year, newGenre, searchValue]); // Include searchValue in the dependency array
 
   useEffect(() => {
     function handleScroll() {
@@ -104,10 +106,10 @@ export default function MovieAPI({ year, newGenre = "28" }) {
           <Card.Body style={{ display: "flex", flexDirection: "column" }}>
             <Card.Title>{movie.original_title}</Card.Title>
 
-            {/* Description with Animation */}
+            {/* Description with updated transition */}
             <div
               style={{
-                maxHeight: expandedDescriptions[movie.id] ? "150px" : "0px",
+                maxHeight: expandedDescriptions[movie.id] ? "1000px" : "0px", // Adjusted maxHeight for smooth transition
                 opacity: expandedDescriptions[movie.id] ? 1 : 0,
                 overflow: "hidden",
                 transition:
