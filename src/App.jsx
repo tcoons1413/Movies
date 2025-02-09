@@ -10,7 +10,9 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import Footer from "./components/Footer";
 
+// - This is my main component.
 function App() {
+  // - State management in the main to pass props
   let [year, setYear] = useState();
 
   function setCurrentYear(year) {
@@ -22,8 +24,6 @@ function App() {
   function setCurrentGenre(newGenre) {
     setNewGenre(newGenre);
   }
-
-
   return (
     <>
       <MantineProvider>
@@ -33,7 +33,7 @@ function App() {
           setNewGenre={setCurrentGenre}
           newGenre={newGenre}
         />
-        <MovieAPI year={year} newGenre={newGenre}/>
+        <MovieAPI year={year} newGenre={newGenre} />
         <Footer />
       </MantineProvider>
     </>

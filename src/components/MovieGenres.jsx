@@ -23,7 +23,7 @@ export default function MovieGenres({ newGenre, setNewGenre }) {
         .catch((err) => console.error(err));
     }
     getData();
-  }, [])
+  }, []);
   let selectedGenre = movieGenre.genres?.find((selectGenre) => {
     return selectGenre.id === newGenre;
   });
