@@ -1,9 +1,14 @@
-// import Button from "react-bootstrap/Button";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import MovieGenres from "./MovieGenres";
+import { motion } from "framer-motion";
+import Spinner from "./Spinner";
+
+// Helper component for the loading animation
+const LoadingSpinner = () => <Spinner />;
 
 function Navbars({
   year,
@@ -12,17 +17,13 @@ function Navbars({
   setNewGenre,
   searchValue,
   setSearchValue,
-  // handleSearch,
+  isTyping,
 }) {
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value); // Update the searchValue state
-  };
 
-  // // Handle search button click
-  // const handleSearchClick = () => {
-  //   handleSearch(searchValue); // Call the parent function to search
-  // };
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <>
@@ -44,22 +45,16 @@ function Navbars({
               ></Nav>
               <Form className="d-flex">
                 <Form.Control
-                  style={{ width: "145px" }}
+                  style={{ width: "207px" }}
                   type="search"
                   placeholder="Search Movie"
                   className="me-2"
                   aria-label="Search"
-                  value={searchValue} // Bind the value to the search input
-                  onChange={handleSearchChange} // Update the searchValue state
+                  value={searchValue}
+                  onChange={handleSearchChange}
                 />
-                {/* <Button
-                  disabled
-                  style={{ width: "100px" }}
-                  variant="outline-success"
-                  onClick={handleSearchClick} // Trigger search when button is clicked
-                >
-                  Search
-                </Button> */}
+                {isTyping ? <LoadingSpinner /> : null}{" "}
+                {/* Show spinner when typing */}
               </Form>
               <Navbar className="bg-body">
                 <div className="d-flex gap-3">

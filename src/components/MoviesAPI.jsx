@@ -2,8 +2,15 @@ import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import MovieYoutube from "./MovieYoutube";
+import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
+import FadeInSection from "./FadeInSection";
 
-export default function MovieAPI({ year, newGenre = "28", searchValue }) {
+export default function MovieAPI({
+  year,
+  newGenre = "28",
+  searchValue,
+  isTyping,
+}) {
   const [movieData, setMovieData] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [newYoutubeURL, setNewYouTubeURL] = useState("LYaJVfiwv0w");
@@ -11,10 +18,10 @@ export default function MovieAPI({ year, newGenre = "28", searchValue }) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
+  const [favorites, setFavorites] = useState([]); // Track favorites
 
   const handleClose = () => setShow(false);
 
-  // Modify the fetchMovies function to accept searchValue
   async function fetchMovies(pageNum) {
     try {
       setLoading(true);
@@ -42,7 +49,14 @@ export default function MovieAPI({ year, newGenre = "28", searchValue }) {
     setMovieData([]);
     setPage(1);
     fetchMovies(1);
-  }, [year, newGenre, searchValue]); // Include searchValue in the dependency array
+  }, [year, newGenre]);
+
+  useEffect(() => {
+    if (!isTyping) {
+      setMovieData([]);
+      fetchMovies(1);
+    }
+  }, [isTyping]);
 
   useEffect(() => {
     function handleScroll() {
@@ -71,6 +85,16 @@ export default function MovieAPI({ year, newGenre = "28", searchValue }) {
     }));
   }
 
+  // Toggle favorite state
+  const toggleFavorite = (movieId) => {
+    setFavorites(
+      (prevFavorites) =>
+        prevFavorites.includes(movieId)
+          ? prevFavorites.filter((id) => id !== movieId) // Remove from favorites
+          : [...prevFavorites, movieId] // Add to favorites
+    );
+  };
+
   return (
     <div
       style={{
@@ -79,62 +103,90 @@ export default function MovieAPI({ year, newGenre = "28", searchValue }) {
         gap: "20px",
         justifyContent: "center",
         marginTop: "20px",
-        alignItems: "start", // Prevent Bootstrap height issues
+        alignItems: "start",
       }}
     >
-      {movieData.map((movie) => (
-        <Card
-          key={movie.id}
-          style={{
-            width: "18rem",
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "400px",
-            transition: "all 0.3s ease-in-out",
-          }}
-        >
-          <Card.Img
-            className="hover-card"
-            variant="top"
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            onClick={() => {
-              setShow(true);
-              setSelectedTitle(movie.title);
-              setNewYouTubeURL(movie.id);
+      {movieData.map((movie, index) => (
+        <FadeInSection key={movie.id} delay={index * 1}>
+          {" "}
+          {/* Add a delay based on index */}
+          <Card
+            key={`${movie.id}-${index}`} // Combine movie.id and index to make the key unique
+            style={{
+              width: "18rem",
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "400px",
+              transition: "all 0.3s ease-in-out",
             }}
-          />
-          <Card.Body style={{ display: "flex", flexDirection: "column" }}>
-            <Card.Title>{movie.original_title}</Card.Title>
-
-            {/* Description with updated transition */}
-            <div
-              style={{
-                maxHeight: expandedDescriptions[movie.id] ? "1000px" : "0px", // Adjusted maxHeight for smooth transition
-                opacity: expandedDescriptions[movie.id] ? 1 : 0,
-                overflow: "hidden",
-                transition:
-                  "max-height 0.4s ease-in-out, opacity 0.3s ease-in-out",
+          >
+            <Card.Img
+              className="hover-card"
+              variant="top"
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              onClick={() => {
+                setShow(true);
+                setSelectedTitle(movie.title);
+                setNewYouTubeURL(movie.id);
               }}
-            >
-              <Card.Text>{movie.overview}</Card.Text>
-            </div>
+            />
+            <Card.Body style={{ display: "flex", flexDirection: "column" }}>
+              <Card.Title>{movie.original_title}</Card.Title>
 
-            {/* Toggle Button */}
-            <Button
-              variant="primary"
-              onClick={() => toggleDescription(movie.id)}
-              className="mt-auto"
-            >
-              {expandedDescriptions[movie.id]
-                ? "Hide Description"
-                : "Show Description"}
-            </Button>
-          </Card.Body>
-        </Card>
+              {/* Favorite Button with Animation */}
+              <Button
+                variant="link"
+                onClick={() => toggleFavorite(movie.id)}
+                style={{
+                  position: "absolute",
+                  bottom: "55px",
+                  right: "5px",
+                  background: "transparent",
+                  border: "none",
+                  transform: favorites.includes(movie.id)
+                    ? "scale(1.2)"
+                    : "scale(1)", // Animate the star
+                  transition: "transform 0.3s ease", // Smooth scaling transition
+                }}
+              >
+                {favorites.includes(movie.id) ? (
+                  <FaStar size={24} color="#ffd700" />
+                ) : (
+                  <FaRegStar size={24} color="#ffd700" />
+                )}
+              </Button>
+
+              {/* Description with updated transition */}
+              <div
+                style={{
+                  maxHeight: expandedDescriptions[movie.id] ? "1000px" : "0px",
+                  opacity: expandedDescriptions[movie.id] ? 1 : 0,
+                  overflow: "hidden",
+                  transition:
+                    "max-height 0.4s ease-in-out, opacity 0.3s ease-in-out",
+                }}
+              >
+                <Card.Text>{movie.overview}</Card.Text>
+              </div>
+
+              {/* Toggle Button */}
+              <Button
+                variant="primary"
+                onClick={() => toggleDescription(movie.id)}
+                className="mt-auto"
+              >
+                {expandedDescriptions[movie.id]
+                  ? "Hide Description"
+                  : "Show Description"}
+              </Button>
+            </Card.Body>
+          </Card>
+        </FadeInSection>
       ))}
+
       {loading && <h3 className="text-center">Loading more movies...</h3>}
       <MovieYoutube
-        newYoutubeURL={newYoutubeURL}
+        newYoutubeURL={newYoutubeURL || ""}
         setNewYouTubeURL={setNewYouTubeURL}
         show={show}
         handleClose={handleClose}

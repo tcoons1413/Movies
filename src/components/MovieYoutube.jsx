@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -25,13 +26,16 @@ export default function MovieYoutube({
         );
         const data = await response.json();
 
-        // Look specifically for trailers, not other types of videos
-        const youtubeTrailer = data.results.find(
-          (video) => video.site === "YouTube" && video.type === "Trailer"
-        );
+        // Check if results exists and is an array
+        if (data.results && Array.isArray(data.results)) {
+          // Look specifically for trailers, not other types of videos
+          const youtubeTrailer = data.results.find(
+            (video) => video.site === "YouTube" && video.type === "Trailer"
+          );
 
-        // Set the video key or fallback to an empty string
-        setYouTubeURL(youtubeTrailer ? youtubeTrailer.key : "");
+          // Set the video key or fallback to an empty string
+          setYouTubeURL(youtubeTrailer ? youtubeTrailer.key : "");
+        }
       } catch (error) {
         console.error("Error fetching YouTube video:", error);
       }

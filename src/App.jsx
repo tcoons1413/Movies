@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import MovieAPI from "./components/MoviesAPI";
 import Navbars from "./components/Navbars";
@@ -8,10 +8,11 @@ import { MantineProvider } from "@mantine/core";
 import Footer from "./components/Footer";
 
 function App() {
-  // State for Year, Genre, and Search Value
-  const [year, setYear] = useState();
-  const [newGenre, setNewGenre] = useState();
-  const [searchValue, setSearchValue] = useState(""); // State to hold search query
+  // State for Year, Genre, and Search Value, isTyping
+  const [year, setYear] = useState("");
+  const [newGenre, setNewGenre] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   // Function to set current Year and Genre
   function setCurrentYear(year) {
@@ -22,11 +23,17 @@ function App() {
     setNewGenre(newGenre);
   }
 
-  // Function to handle the search
-  const handleSearch = (searchValue) => {
-    console.log("Searching for:", searchValue);
-    // Here you can implement your logic to search the movies based on searchValue
-  };
+  useEffect(() => {
+    const typingTimer = setTimeout(() => {
+      setIsTyping(false);
+    }, 500);
+
+    if (searchValue) {
+      setIsTyping(true);
+    }
+
+    return () => clearTimeout(typingTimer);
+  }, [searchValue]);
 
   return (
     <>
@@ -36,11 +43,16 @@ function App() {
           year={year}
           setNewGenre={setCurrentGenre}
           newGenre={newGenre}
-          searchValue={searchValue} // Pass searchValue to Navbars
-          setSearchValue={setSearchValue} // Pass setSearchValue to Navbars
-          handleSearch={handleSearch} // Pass handleSearch to Navbars
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          isTyping={isTyping}
         />
-        <MovieAPI year={year} newGenre={newGenre} searchValue={searchValue} />
+        <MovieAPI
+          year={year}
+          newGenre={newGenre}
+          searchValue={searchValue}
+          isTyping={isTyping}
+        />
         <Footer />
       </MantineProvider>
     </>
