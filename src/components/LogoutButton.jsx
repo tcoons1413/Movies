@@ -8,9 +8,9 @@ function LogoutButton() {
   return (
     <Button
       onClick={logout}
-      style={{ width: "205px" }}
-      variant="outline-primary"
-      align="start"
+      style={{ maxWidth: "250px"}}
+      variant="outline-danger"
+
     >
       Logout
     </Button>

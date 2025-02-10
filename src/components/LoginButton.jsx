@@ -9,7 +9,7 @@ function LoginButton() {
     <Button
       onClick={loginWithGoogle}
       style={{ width: "150px" }}
-      variant="outline-primary"
+      variant="outline-success"
       align="start"
     >
       Login

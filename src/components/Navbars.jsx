@@ -51,31 +51,25 @@ function Navbars({
 
                   <div>
                     <Form className="d-flex">
-                      <Form.Control
-                        style={{ width: "207px" }}
-                        type="search"
-                        placeholder="Search Movie"
-                        className="me-2"
-                        aria-label="Search"
-                        value={searchValue}
-                        onChange={handleSearchChange}
-                      />
-                      <LogoutButton />
-                      {isTyping && <LoadingSpinner />}
+                      <div className="d-flex justify-content-sm-between">
+                        <Form.Control
+                          style={{ maxWidth: "162px" }}
+                          type="search"
+                          placeholder="Search Movie"
+                          className="me-2"
+                          aria-label="Search"
+                          value={searchValue}
+                          onChange={handleSearchChange}
+                        />
+                        <LogoutButton />
+                      </div>
                     </Form>
                     <Navbar className="bg-body">
-                      <div className="d-flex gap-3">
-                        <div className="d-flex flex-row gap-2">
+                      <div className="d-flex gap-2 justify-content-between w-sm-100">
+                        <div className="d-flex flex-row">
                           <div data-mdb-input-init className="form-outline">
                             <input
-                              type="number"
-                              id="typeNumber"
-                              className="form-control"
-                              placeholder="Pages"
-                            />
-                          </div>
-                          <div data-mdb-input-init className="form-outline">
-                            <input
+                              style={{ maxWidth: "162px", minWidth: "100px" }}
                               type="number"
                               id="year"
                               className="form-control"
