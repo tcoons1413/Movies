@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import MovieAPI from "./components/MoviesAPI";
 import Navbars from "./components/Navbars";
-import "./assets/bootstrap.min.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import Footer from "./components/Footer";
+import { AuthProvider } from "./components/FirebaseAuthContext";
+import { FavoritesProvider } from "./components/FavoritesProvider";
 
 function App() {
   // State for Year, Genre, and Search Value, isTyping
@@ -37,24 +38,28 @@ function App() {
 
   return (
     <>
-      <MantineProvider>
-        <Navbars
-          setYear={setCurrentYear}
-          year={year}
-          setNewGenre={setCurrentGenre}
-          newGenre={newGenre}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          isTyping={isTyping}
-        />
-        <MovieAPI
-          year={year}
-          newGenre={newGenre}
-          searchValue={searchValue}
-          isTyping={isTyping}
-        />
-        <Footer />
-      </MantineProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+          <MantineProvider>
+            <Navbars
+              setYear={setCurrentYear}
+              year={year}
+              setNewGenre={setCurrentGenre}
+              newGenre={newGenre}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              isTyping={isTyping}
+            />
+            <MovieAPI
+              year={year}
+              newGenre={newGenre}
+              searchValue={searchValue}
+              isTyping={isTyping}
+            />
+            <Footer />
+          </MantineProvider>
+        </FavoritesProvider>
+      </AuthProvider>
     </>
   );
 }

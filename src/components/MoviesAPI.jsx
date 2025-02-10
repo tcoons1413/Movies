@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import MovieYoutube from "./MovieYoutube";
 import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 import FadeInSection from "./FadeInSection";
+import { useAuth } from "./FirebaseAuthContext";
+import FavoriteButton from "./FavoriteButton";
 
 export default function MovieAPI({
   year,
@@ -94,7 +96,7 @@ export default function MovieAPI({
           : [...prevFavorites, movieId] // Add to favorites
     );
   };
-
+  const { user } = useAuth();
   return (
     <div
       style={{
@@ -133,28 +135,7 @@ export default function MovieAPI({
             <Card.Body style={{ display: "flex", flexDirection: "column" }}>
               <Card.Title>{movie.original_title}</Card.Title>
 
-              {/* Favorite Button with Animation */}
-              <Button
-                variant="link"
-                onClick={() => toggleFavorite(movie.id)}
-                style={{
-                  position: "absolute",
-                  bottom: "55px",
-                  right: "5px",
-                  background: "transparent",
-                  border: "none",
-                  transform: favorites.includes(movie.id)
-                    ? "scale(1.2)"
-                    : "scale(1)", // Animate the star
-                  transition: "transform 0.3s ease", // Smooth scaling transition
-                }}
-              >
-                {favorites.includes(movie.id) ? (
-                  <FaStar size={24} color="#ffd700" />
-                ) : (
-                  <FaRegStar size={24} color="#ffd700" />
-                )}
-              </Button>
+              {user && <FavoriteButton movie={movie} />}
 
               {/* Description with updated transition */}
               <div
